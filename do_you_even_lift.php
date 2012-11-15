@@ -44,7 +44,7 @@ function curl_download($Url){
     $code = (int)$info['http_code'];
     if ($response === false) {
         return array('success' => false, 'code' => $code, 'response' => '',
-                     'error' => curl_error($curl), 'info' => $info);
+                     'error' => curl_error($ch), 'info' => $info);
     }
     
     curl_close($ch);
