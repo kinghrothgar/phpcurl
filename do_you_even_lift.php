@@ -56,10 +56,8 @@ function curl_download($Url){
 $result = curl_download('https://godbox.biz');
 
 if ($result['code'] == 0) {
+    print strftime('[%c]') . " Error\n";
     throw new Exception('Unknown Google error. Throwing exception so details dont go unnoticed: ' . print_r($result, true));
 }
-
-print_r($result);
-
 ?>
 
