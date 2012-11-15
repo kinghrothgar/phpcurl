@@ -22,7 +22,7 @@ function curl_download($Url){
     //curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
  
     // Include header in result? (0 = yes, 1 = no)
-    curl_setopt($ch, CURLOPT_HEADER, true);
+    //curl_setopt($ch, CURLOPT_HEADER, true);
  
     // Should cURL return or print out the data? (true = return, false = print)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -55,7 +55,7 @@ function curl_download($Url){
 
 $result = curl_download('https://godbox.biz');
 
-if ($result['code'] != 200) {
+if ($result['code'] == 0) {
     throw new Exception('Unknown Google error. Throwing exception so details dont go unnoticed: ' . print_r($result, true));
 }
 
