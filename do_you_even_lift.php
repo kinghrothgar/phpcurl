@@ -55,12 +55,7 @@ function curl_download($Url){
 
 $result = curl_download('https://godbox.biz');
 
-if ($result['code'] > 400 && $result['code'] <= 408) {
-    $resultCode = -2;
-} else {
-    if (isset($result['info'])) {
-        $result['info'] = json_encode($result['info']);
-    }
+if ($result['code'] != 200) {
     throw new Exception('Unknown Google error. Throwing exception so details dont go unnoticed: ' . print_r($result, true));
 }
 
