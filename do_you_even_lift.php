@@ -49,19 +49,21 @@ function curl_download($Url){
     
     curl_close($ch);
 
-    if ($result['code'] > 400 && $result['code'] <= 408) {
-        $resultCode = -2;
-    } else {
-        if (isset($result['info'])) {
-            $result['info'] = json_encode($result['info']);
-        }
-        throw new Exception('Unknown Google error. Throwing exception so details dont go unnoticed: ' . print_r($result, true));
-    }
     
     return array('success' => true, 'code' => $code, 'response' => $response, 'info' => $info);
 }
 
 $result = curl_download('https://godbox.biz');
+
+if ($result['code'] > 400 && $result['code'] <= 408) {
+    $resultCode = -2;
+} else {
+    if (isset($result['info'])) {
+        $result['info'] = json_encode($result['info']);
+    }
+    throw new Exception('Unknown Google error. Throwing exception so details dont go unnoticed: ' . print_r($result, true));
+}
+
 print_r($result);
 
 ?>
