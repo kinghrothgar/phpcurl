@@ -16,27 +16,43 @@ function curl_download($Url){
     curl_setopt($ch, CURLOPT_URL, $Url);
  
     // Set a referer
-    curl_setopt($ch, CURLOPT_REFERER, "http://www.example.org/yay.htm");
+    //curl_setopt($ch, CURLOPT_REFERER, "http://www.example.org/yay.htm");
  
     // User agent
-    curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
+    //curl_setopt($ch, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
  
     // Include header in result? (0 = yes, 1 = no)
-    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_HEADER, true);
  
     // Should cURL return or print out the data? (true = return, false = print)
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  
-    // Timeout in seconds
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
- 
-    // Download the given URL, and return output
-    $output = curl_exec($ch);
- 
-    // Close the cURL resource, and free system resources
+    // The maximum number of seconds to allow cURL funtion to excecute
+    curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+
+    // Connection timeout
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 2);
+
+    // Stop cURL from verifying the peer's certificate.
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    // Force the use of a new connection instead of a cached one
+    curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+
+    $response = curl_exec($ch);
+    $info = curl_getinfo($ch);
+    $code = (int)$info['http_code'];
+    if ($response === false) {
+        return array('success' => false, 'code' => $code, 'response' => '',
+                     'error' => curl_error($curl), 'info' => $info);
+    }
     curl_close($ch);
- 
-    return $output;
+
+    return array('success' => true, 'code' => $code, 'response' => $response, 'info' => $info);
 }
 
+$result = curl_download('https://godbox.biz');
+print_r($result);
+
 ?>
+
