@@ -53,7 +53,7 @@ function curl_download($Url){
     return array('success' => true, 'code' => $code, 'response' => $response, 'info' => $info);
 }
 
-$result = curl_download('https://godbox.biz');
+$result = curl_download($argv[1]);
 
 if ($result['code'] == 0) {
     print strftime('[%c]') . " Error\n";
@@ -61,5 +61,7 @@ if ($result['code'] == 0) {
 } else {
     print strftime('[%c]') . " Success\n";
 }
+
+
 ?>
 
