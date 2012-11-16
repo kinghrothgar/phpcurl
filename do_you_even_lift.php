@@ -39,6 +39,9 @@ function curl_download($Url){
     // Force the use of a new connection instead of a cached one
     curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
+    // Force the connect to close when it has finished processing
+    curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
+
     // output verbose information. Writes output to STDERR, or the file specified using CURLOPT_STDERR
     curl_setopt($ch, CURLOPT_VERBOSE, true);
 
