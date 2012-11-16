@@ -39,6 +39,14 @@ function curl_download($Url){
     // Force the use of a new connection instead of a cached one
     curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 
+    // output verbose information. Writes output to STDERR, or the file specified using CURLOPT_STDERR
+    curl_setopt($ch, CURLOPT_VERBOSE, true);
+
+    // Stuff
+    $curl_stderr = fopen('curl_verbose.log', 'a');
+    fwrite($curl_stderr, strftime('[%c]' . " "));
+    curl_setopt($ch, CURLOPT_STDERR, $curl_stderr);
+
     $response = curl_exec($ch);
     $info = curl_getinfo($ch);
     $code = (int)$info['http_code'];
@@ -48,6 +56,7 @@ function curl_download($Url){
     }
     
     curl_close($ch);
+    fwrite($curl_stderr, "\n");
 
     
     return array('success' => true, 'code' => $code, 'response' => $response, 'info' => $info);
