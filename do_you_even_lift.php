@@ -43,12 +43,12 @@ function curl_download($Url){
     curl_setopt($ch, CURLOPT_FORBID_REUSE, true);
 
     // output verbose information. Writes output to STDERR, or the file specified using CURLOPT_STDERR
-    curl_setopt($ch, CURLOPT_VERBOSE, true);
+    //curl_setopt($ch, CURLOPT_VERBOSE, true);
 
     // Stuff
-    $curl_stderr_tmp = fopen('/tmp/curl_verbose.log', 'w');
-    fwrite($curl_stderr_tmp, strftime('[%c]' . " "));
-    curl_setopt($ch, CURLOPT_STDERR, $curl_stderr_tmp);
+    //$curl_stderr_tmp = fopen('/tmp/curl_verbose.log', 'w');
+    //fwrite($curl_stderr_tmp, strftime('[%c]' . " "));
+    //curl_setopt($ch, CURLOPT_STDERR, $curl_stderr_tmp);
 
     $response = curl_exec($ch);
     $info = curl_getinfo($ch);
@@ -69,9 +69,9 @@ $result = curl_download($argv[1]);
 if ($result['code'] == 0) {
     print strftime('[%c]') . " Error\n";
 
-    $curl_stderr = fopen('curl_verbose.log', 'a');
-    $curl_stderr_tmp = file_get_contents('/tmp/curl_verbose.log');
-    fwrite($curl_stderr, $curl_stderr_tmp . "\n");
+    //$curl_stderr = fopen('curl_verbose.log', 'a');
+    //$curl_stderr_tmp = file_get_contents('/tmp/curl_verbose.log');
+    //fwrite($curl_stderr, $curl_stderr_tmp . "\n");
 
     throw new Exception('Unknown Google error. Throwing exception so details dont go unnoticed: ' . print_r($result, true));
 } else {
